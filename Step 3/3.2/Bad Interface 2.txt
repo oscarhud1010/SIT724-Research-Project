@@ -1,0 +1,37 @@
+Step 3.2: See how the LLM rate an extremely low quality interface - Ugly interface 2
+
+Running 10 simulations with base seed: 1400
+
+Model model/Qwen2.5-VL-72B-Instruct-q4_k_m.gguf
+
+Image: images/ugly_interface_2.png
+
+Question file: step_2_questions.json
+
+Image description test: 
+
+The image is a screenshot of a website called "LINGsCARS.com," which appears to be a car leasing and contract hire service. The website is visually cluttered with a variety of elements, including text, images, and advertisements.
+
+### Key Elements:
+1. **Header:**
+   - The website's name, "LINGsCARS.com," is prominently displayed at the top, along with a tagline that reads "UK CONTRACT HIRE CARS FROM LING VALENTINE."
+   - There is a navigation bar with links to different sections such as Home, Cars and Vans, How It Works, Price Lists, About Ling, Customers, Fun Stuff, and Quote/Order.
+
+2. **Main Content:**
+   - The main section features a search bar with the text "Search Cars Here" and a button labeled "Go."
+   - There are multiple sections with headings like "CAR LEASING - CONTRACT HIRE - CHEAP LEASE CARS" and "The Best FAQs in the World!"
+   - A live Twitter feed is displayed on the right side of the page, showing recent tweets related to the website.
+
+3. **Advertisements and Graphics:**
+   - The website is filled with various graphics and advertisements. There are images
+
+2,3,6,5,3,2,3,5,4,5,3,5,4,4,5,4,5,4,5,4,4,4,5,4,4,5
+2,3,6,4,3,2,2,4,5,1,2,4,5,2,1,2,4,3,4,3,3,2,6,2,2,1
+2,2,6,6,3,2,3,2,4,6,2,5,6,2,6,2,5,2,5,3,5,5,6,2,2,6
+2,2,6,4,3,1,2,2,5,2,2,6,2,2,2,2,4,2,5,2,2,2,6,2,2,2
+2,3,6,5,3,2,2,4,4,6,3,4,5,3,6,3,4,3,4,3,4,4,5,3,3,6
+3,2,7,4,4,3,3,2,4,2,3,4,5,3,2,3,4,3,4,3,3,4,6,3,3,5
+2,3,6,5,4,3,4,4,5,3,3,4,5,3,3,3,4,3,4,4,3,4,5,3,3,4
+2,3,6,5,4,4,4,4,4,3,4,4,5,3,3,3,4,4,4,4,4,4,5,3,3,3
+2,2,4,4,3,3,3,3,4,3,3,4,4,3,3,3,4,3,4,3,3,4,3,3,3,3
+2,3,6,5,4,3,2,3,4,6,3,5,5,2,6,2,4,3,5,3,5,5,6,2,3,6

@@ -1,0 +1,44 @@
+Step 3.2: See how the LLM rate an extremely low quality interface - Ugly interface 1
+
+Running 10 simulations with base seed: 1400
+
+Model model/Qwen2.5-VL-72B-Instruct-q4_k_m.gguf
+
+Image: images/ugly_interface_1.png
+
+Question file: step_2_questions.json
+
+Image description test: 
+
+This image shows a graphical user interface (GUI) for a software program called `wGetGUI`, version 1.0. The program is designed to provide a user-friendly interface for interacting with the `GNU Wget` command-line tool, which is used for downloading files from the web.
+
+### Key Elements in the Interface:
+
+1. **URL Section**: 
+   - There is a text box labeled `URL:` where users can input the web address they want to download.
+
+2. **Accept/Reject Filters**:
+   - Users can specify file types to include or exclude from the download.
+   - There are checkboxes for common file extensions like `.html`, `.gif`, `.jpg`, `.zip`, `.doc`, etc.
+   - There is also an option for a custom list of files to include or exclude.
+
+3. **Special Retries**:
+   - A textbox labeled `Special Retries:` with the value `10`, indicating the number of retries `wget` will attempt if a download fails.
+
+4. **Additional Parameters**:
+   - A textbox for entering additional `wget` command-line parameters.
+
+5. **Running Options**:
+   - Options include "Go 2 background", "Continue file download", and "Overwrite Logfile".
+
+
+3,4,5,5,3,4,4,4,4,5,4,3,4,4,3,4,5,3,4,4,4,5,4,3,4,4
+3,4,5,4,4,3,3,5,4,6,4,4,4,3,5,4,5,3,4,4,4,4,5,4,4,5
+3,4,5,5,4,3,3,5,4,4,4,4,4,4,3,4,5,4,4,4,4,4,4,4,4,4
+3,5,6,6,4,5,5,6,4,6,4,5,6,4,5,5,6,4,5,5,5,5,5,4,4,5
+3,4,5,4,3,4,4,5,4,5,4,4,4,4,4,4,5,4,4,4,4,4,4,4,4,4
+2,4,6,4,4,4,4,5,4,6,4,4,5,3,5,4,5,4,4,4,4,4,4,3,4,5
+4,5,6,4,4,4,4,5,5,6,4,4,5,4,6,4,5,4,4,5,5,5,5,5,5,6
+4,5,6,5,4,4,4,5,4,4,5,4,5,4,4,4,5,4,4,4,5,5,5,4,4,4
+4,5,5,6,5,4,4,6,5,5,5,4,5,5,4,5,6,5,5,5,5,5,5,4,4,4
+3,4,5,5,4,3,3,5,4,5,4,4,4,4,5,4,5,4,4,4,4,4,4,4,4,5

@@ -1,0 +1,31 @@
+Step 3.2: See how the LLM rate an extremely low quality interface - Good interface 1
+
+Running 10 simulations with base seed: 1400
+
+Model model/Qwen2.5-VL-72B-Instruct-q4_k_m.gguf
+
+Image: images/good_interface_1.png
+
+Question file: step_2_questions.json
+
+Image description test: 
+This image is a screenshot of a website with a focus on career development and job opportunities in the tech industry. The website's name is "built in," and its tagline is "Uniting People + Tech." The main headline reads, "Get the job you really want. Learn. Grow. Build your career." 
+
+The website highlights several features:
+- Tech trends, jobs, and companies
+- 1.3 million tech professionals, 33.9K startups, and 238K local and remote jobs
+
+There are dropdown menus for selecting job roles (e.g., "Dev + Engineer") and experience levels (e.g., "3-5 Years of Experience"). A "SEE JOB MATCHES" button is prominently displayed.
+
+The background includes an illustration of a desk setup with a computer, books, and a potted plant. The color scheme is primarily blue with accents of pink and green. The website also offers options for matching with companies, reading tech articles, and receiving job offers.
+
+6,6,2,3,6,5,5,7,4,3,6,2,3,6,4,6,7,5,2,6,6,5,5,5,5,4
+6,6,2,4,5,5,5,6,4,2,5,2,4,5,4,5,6,5,3,5,6,5,5,6,6,4
+6,6,4,3,5,5,5,5,4,4,5,3,4,5,4,5,5,5,4,5,5,5,5,5,5,4
+6,6,2,5,5,5,5,5,4,3,5,2,5,6,4,6,5,5,4,5,6,5,6,6,6,4
+6,6,2,3,5,5,5,6,4,3,5,2,4,5,4,5,6,5,3,5,6,5,5,5,5,4
+5,6,3,5,6,5,5,6,4,4,6,2,6,6,5,6,5,5,4,6,6,6,6,6,6,5
+6,6,4,3,5,5,5,6,4,5,6,2,4,6,4,6,5,5,4,5,6,5,5,5,5,5
+6,6,4,4,5,5,5,6,4,4,6,5,5,6,5,6,6,5,5,5,6,5,6,6,6,5
+6,6,5,3,5,5,5,6,4,4,5,2,4,5,4,5,6,5,3,5,6,5,6,6,5,4
+6,6,4,3,5,5,5,5,4,4,5,3,4,5,5,5,4,4,4,5,5,5,5,5,5,5

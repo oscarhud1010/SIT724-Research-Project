@@ -1,0 +1,166 @@
+
+import json
+import base64
+from llama_cpp import Llama
+from llama_cpp.llama_chat_format import Qwen25VLChatHandler
+from datetime import datetime
+
+# Model/Image/Question file paths
+# This code was run 4 times, once for each interface image
+IMAGE_PATH = 'images/good_interface_1.png'
+#IMAGE_PATH = 'images/good_interface_2.png'
+#IMAGE_PATH = 'images/ugly_interface_1.png'
+#IMAGE_PATH = 'images/ugly_interface_2.png'
+
+MODEL_PATH = 'model/Qwen2.5-VL-72B-Instruct-q4_k_m.gguf'
+CLIP_MODEL_PATH = 'model/Qwen2.5-VL-72B-Instruct-mmproj-f16.gguf'
+
+# Re-use the validated question format from step 2
+QUESTIONS_FILE_PATH = 'step_2_questions.json'
+
+# Choose how many simulations to run and the base seed to start from
+NUM_SIMULATIONS = 20
+base_seed = 1400
+
+# RECORD KEEPING - Create output file, explain what this simulations aims to do, name file based on date run
+# keep record of model, image, question file and any other relevant variables
+SIMULATION_TYPE = 'Step 3.2: See how the LLM rate a good quality interface - Good interface 2'
+
+timestamp = datetime.now().strftime("%d-%m-%Y %I-%M%p")
+output_filename = f"Answers/Answer {timestamp}.txt"
+
+with open(output_filename, "w") as file:
+    print(f"{SIMULATION_TYPE}\n", file=file)
+    print(f"Running {NUM_SIMULATIONS} simulations with base seed: {base_seed}\n", file=file)
+    print(f"Model {MODEL_PATH}\n", file=file)
+    print(f"Image: {IMAGE_PATH}\n", file=file)
+    print(f"Question file: {QUESTIONS_FILE_PATH}\n", file=file)
+
+# Load question file
+with open(QUESTIONS_FILE_PATH, 'r') as f:
+    questions_list = json.load(f)
+
+# Convert image into format LLM can see
+def image_to_base64_data_uri(file_path):
+    with open(file_path, "rb") as img_file:
+        base64_data = base64.b64encode(img_file.read()).decode('utf-8')
+        return f"data:image/png;base64,{base64_data}"
+
+data_uri = image_to_base64_data_uri(IMAGE_PATH)
+
+# Set up LLM with chosen parameters
+chat_handler = Qwen25VLChatHandler(clip_model_path=CLIP_MODEL_PATH)
+
+llm = Llama(
+    # Model settings
+    model_path=MODEL_PATH,
+    chat_handler=chat_handler,
+    chat_format="qwen2.5-vl",
+    n_ctx=8192,  # Increased context for batch processing
+    
+    # Optimize
+    verbose=False,  # Disable verbose output for speed
+    n_threads=8,  # Increase threads 
+    n_batch=512,  # Increase batch size
+)
+
+# ----------------- CREATE PROMPT -----------------
+def create_batch_prompt(questions_list):
+
+    # Resuse prompt from step_2_v2 - finalised version that got the best results.
+    prompt = "Answer each of the following bipolar likert-scale questions below for the interface shown. For each question rate the interface from 1 to 7 based on how the interface shown looks.\n\n"
+
+    for i, question in enumerate(questions_list, 1):
+        prompt += f"Question {i}: {question}\n"
+
+    prompt += f"\nRespond with a JSON object in this format. No markdown, no code blocks, no extra text, no extra white spaces, include quotation marks.\n"
+    prompt +=f"{{\"q1\": 1 to 7, \"q2\": 1 to 7, ..., \"q{len(questions_list)}\": 7}}\n"
+
+    
+    return prompt
+
+batch_prompt = create_batch_prompt(questions_list)
+
+# Check prompt looks correct
+print(batch_prompt)
+
+# ----------------- IMAGE VERIFICATION -------------
+
+print("Testing image understanding")
+description_response = llm.create_chat_completion(
+    messages=[
+        {
+            "role": "system", 
+            "content": "Describe the image."
+        },
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Please describe what you see in this image."},
+                {"type": "image_url", "image_url": {"url": data_uri}}
+            ]
+        }
+    ],
+    temperature=0.7,
+    max_tokens=256,
+)
+
+description = description_response['choices'][0]['message']['content']
+print(f"Image description: {description}")
+
+
+# Write image description to the output file
+with open(output_filename, "a") as file:
+    print(f"Image description test: {description}\n", file=file)
+
+
+# ---------------- SIMULATION -----------------------
+for sim in range(NUM_SIMULATIONS):
+    current_seed = base_seed + sim
+    
+    print(f'Simulation {sim + 1} (seed: {current_seed}): ', end='', flush=True)
+    
+    # Reset the LMM to use the new seed and clear internal state
+    llm.reset()
+    llm.set_seed(current_seed)
+    
+    response = llm.create_chat_completion(
+        messages=[
+            {
+                "role": "system", 
+                "content": "You are a helpful assistant who does what the prompt says"
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": batch_prompt},
+                    {"type": "image_url", "image_url": {"url": data_uri}}
+                ]
+            }
+        ],
+        temperature=0.7,
+        max_tokens=2048,  
+    )
+    
+    # Get response
+    response_content = response['choices'][0]['message']['content']
+
+    # If response is in valid JSON format print it in nice format for analysis, if not i manually change later
+    try:
+        response_json = json.loads(response_content)
+
+        with open(output_filename, "a") as file:
+            ratings = [str(response_json[f"q{i}"]) for i in range(1, len(questions_list) + 1)]
+            print(",".join(ratings), file=file)
+
+    except json.JSONDecodeError as e:
+        print("JSON parsing error (LLM did not respond as instructed)")
+        print(f"Response content: {response_content}")
+
+        with open(output_filename, "a") as file:
+            print(f"JSON ERROR: ,{response_content}", file=file)
+    
+    print(f"Simulation {sim + 1} complete")
+
+print('FINISHED')
+
